@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block body %} 
+
+  <main class="main pt-4">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+
+          <article class="card mb-4">
+            <header class="card-header text-center">
+              <figure class="text-center py-3">
+                <h1 class="display-5">Get in touch</h1>
+            </figure>
+            <hr>
+            </header>
+            <div class="card-body">
+
+              <p><strong>Your questions and comments are important to us. We've got everything covered for your needs</strong></p>
+
+              <p>If you require any further information, please feel free to reach out to us.</p>
+
+              <form name="sentMessage" id="contactForm" action = "/contact" method="POST" novalidate enctype="multipart/form-data">
+                <br>
+                  <div class="form-floating ">
+                    <input type="text" class="form-control form-control-lg" name="name" id="Name" placeholder="Name" >
+                    <label for="name">Name</label>
+                  </div>
+                  <br>
+                  <div class="form-floating ">
+                    <input type="text" class="form-control form-control-lg" id="email" name="email_adres" placeholder="email" >
+                    <label for="email">Email</label>
+                  </div>
+                  <br>
+                  <div class="form-floating ">
+                    <textarea row="8" type="text" class="form-control form-control-lg" id="msg" name="msg" placeholder="What can we help you with?" ></textarea>
+                    <label for="msg">What can we help you with?</label>
+                  </div>
+                  <br>
+                  <div id="success"></div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary px-3 py-3 w-100" id="sendMessageButton">Send</button>
+                  </div>
+              </form>
+
+            </div>
+          </article><!-- /.card -->
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- <div class="site-newsletter">
+    <div class="container">
+      <div class="text-center">
+        <h3 class="h4 mb-2">Subscribe to our newsletter</h3>
+        <p class="text-muted">Join our monthly newsletter and never miss out on new stories and promotions.</p>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-9 col-md-7 col-lg-5 ms-auto me-auto">
+            <div class="input-group mb-3 mt-3">
+              <input type="text" class="form-control" placeholder="Email address" aria-label="Email address">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Subscribe</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <div class="site-instagram">
+    <div class="action">
+      <a class="btn btn-light" href="#">
+        Follow us @ Instagram
+      </a>
+    </div>
+    <div class="row g-0">
+      <div class="col-sm-6">
+        <div class="row g-0">
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/1.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/2.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/3.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/4.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row g-0">
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/5.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/6.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/7.jpg" alt="" />
+            </a>
+          </div>
+          <div class="col-3">
+            <a class="photo" href="#">
+              <img class="img-fluid" src="img/instagram/8.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+{% endblock %}

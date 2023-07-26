@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Bootstrap 4 Magazine/Blog Theme">
+	<meta name="author" content="Bootlab">
+
+  <title>BlueBerry Fantasy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+
+</head>
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Bʅυҽ <img src="{{ url_for('static', filename='svg/blueberry.svg') }}" width="60" alt="SVG Image"> Fαɳƚαʂყ </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="container mx-5">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/dashboard/">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/add_blogs/">Add Blogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact us</a>
+              </li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+          </ul>
+        </div>
+            <div class="d-flex ">
+              <a class="btn btn-primary text-uppercase me-2 col-md-12" href="/logout/">logout </a>
+            </div>
+          </div>
+        </div>
+      </nav>   
+    </header>
+  <main class="main pt-4">
+    <div class="container">
+        <h1>Access Posts</h1>        
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Sno</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {% for blog in add_blog %}
+
+              <tr>
+                <td>{{blog.sno}}</td>
+                <td><a href="/post/{{blog.sno}}">{{blog.title}}</a></td>
+                <td>{{blog.date}}</td>
+                <th><a href="/edit/{{blog.sno}}"><button class="btn btn-primary">Edit</button></a></th>
+                <th><a href="/delete/{{blog.sno}}"><button onclick="delete{{blog.sno}}" type="delete" class="btn btn-primary">Delete</button></a></th>
+              </tr>
+
+
+            {% endfor %}
+
+            </tbody>
+          </table>
+    </div>
+  </main>
+  
+
+<footer class="fixed-bottom site-footer bg-dark">
+  <div class="container">
+    <div class="copy">
+      &copy; BlueBerry Fantasy 2023<br />
+      All rights reserved
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script javascript”src="{{url_for('static', filename='js/app.js')}}" ></script>
+<script type=”text/ src=”https://code.jquery.com/jquery-1.12.0.min.js”></script>
+<script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js”></script>

@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block body %} 
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <br>
+            <figure class="text-center py-3">
+                <h1>Upload A New Post</h1>
+            </figure>
+            <hr>
+            <br>
+            <form name="sentMessage" id="contactForm" action="/add_blogs/" method="POST" novalidate enctype="multipart/form-data" class="was-validated">
+              <br>
+              <div class="form-floating">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
+                  <label for="title">Title</label>
+                  <div class="invalid-feedback">Please enter a title.</div>
+              </div>
+              <br>
+              <div class="form-floating mb-3">
+                  <select class="form-select" aria-label="Default select example" name="category" id="Category" required>
+                      <option value="">Select a Category</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="Action">Action</option>
+                      <option value="Fantasy">Fantasy</option>
+                      <option value="Horror">Horror</option>
+                      <option value="Sci-fi">Sci-fi</option>
+                      <option value="Thriller">Thriller</option>
+                  </select>
+                  <label for="Category">Category</label>
+                  <div class="invalid-feedback">Please select a category.</div>
+              </div>
+              <br>
+              <div class="form-floating">
+                  <input type="text" class="form-control" name="tags" id="tags" placeholder="Tags" required>
+                  <label for="tags">Tags</label>
+                  <div class="invalid-feedback">Please enter tags.</div>
+              </div>
+              <br>
+              <div class="form-floating">
+                  <textarea name="editor1" required></textarea><br>
+                  <label for="editor1">Content</label>
+                  <div class="invalid-feedback">Please enter content.</div>
+              </div>
+              <br>
+              <div class="mb-3">
+                  <input type="file" class="form-control" id="img_file" name="img_file" required>
+                  <div class="invalid-feedback">Please choose an image.</div>
+              </div>
+              <br>
+              <div id="success"></div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary w-100 mb-4 px-4 py-3" id="sendMessageButton">Add Blog</button>
+              </div>
+          </form>
+               </div>
+    </div>
+</div>
+
+
+
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>  
+    
+<script>  
+    CKEDITOR.replace('editor1');  
+    //CKEDITOR.replace('editor2');  
+  
+    function getData() {  
+        //Get data written in first Editor   
+        var editor_data = CKEDITOR.instances['editor1'].getData();  
+        //Set data in Second Editor which is written in first Editor  
+        CKEDITOR.instances['editor1'].setData(editor_data);  
+    }  
+</script>
+  
+
+
+
+{% endblock %}
