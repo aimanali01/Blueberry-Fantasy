@@ -69,6 +69,9 @@ class Comments(db.Model):
     yemail = db.Column(db.String(20), nullable=False)
     response = db.Column(db.String(120), nullable=False)
     date = db.Column(db.String(12), nullable=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('add_blog.sno'), nullable=False)
+    
+    user = db.relationship('Add_blog', backref='blogs')
     
 class Login(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
@@ -130,16 +133,19 @@ def search():
 def post_route(sno):
     logged_in = 'user_id' in session and session['user_id'] is not None
     blog = Add_blog.query.filter_by(sno=sno).first()
+    post_id = blog.sno
+    comments = Comments.query.filter_by(post_id=post_id).all()
     print(blog.img_file)
     image = b64encode(blog.img_file).decode()
     print(image)
-    comments = Comments.query.filter_by().all()
+    
     
     if request.method == 'POST':
         cname = request.form.get('cname')
         yemail = request.form.get('yemail')
         response = request.form.get('response')
-        comment = Comments(cname=cname, yemail=yemail, response=response, date=datetime.now())
+        post_id = blog.sno
+        comment = Comments(cname=cname, yemail=yemail, response=response, date=datetime.now(), post_id=post_id)
         db.session.add(comment)
         db.session.commit()
         blog = Add_blog.query.filter_by().first() 
@@ -166,7 +172,7 @@ def register():
         db.session.commit()
 
         flash('Account created successfully. Please log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect('login')
 
     return render_template('register.html', parameters=parameters)
 
