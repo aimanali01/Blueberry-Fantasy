@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %} 
 
-
+<body style="height: 100vh">
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
@@ -11,7 +11,7 @@
             </figure>
             <hr>
             <br>
-            <form name="sentMessage" id="contactForm" action="/edit/{{blog.sno}}" method="POST" novalidate enctype="multipart/form-data" class="was-validated">
+            <form name="sentMessage" id="contactForm" action="/edit/{{blog.sno}}" method="POST" novalidate enctype="multipart/form-data" class="needs-validation">
               <br>
               <div class="form-floating">
                   <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{ blog.title }}" required>
@@ -49,7 +49,7 @@
                 <br>
                 <div class="mb-3">
                     {% if img is not none or img.filename != '' %}
-                    <input type="file" class="form-control" id="img_file" name="img_file" required>
+                    <input type="file" class="form-control" id="img_file" name="img_file">
                     {% else %}
                     <input type="hidden" name="image" value="{{ blog.img_file }}">
                     {% endif %}
@@ -59,7 +59,7 @@
                 <br>
                 <div id="success"></div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary w-100 mb-4 px-4 py-3" id="sendMessageButton">Edit Blog</button>
+                    <button type="submit" class="btn btn-primary w-100 mb-4 px-4 py-3" id="sendMessageButton">Submit</button>
                 </div>
             </form>
         </div>
@@ -69,7 +69,7 @@
 
 
     <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>  
-    
+    <script src="{{url_for('static',filename='js/validate.js')}}"></script>  
 <script>  
     CKEDITOR.replace('editor1');  
     //CKEDITOR.replace('editor2');  
@@ -81,6 +81,7 @@
         CKEDITOR.instances['editor1'].setData(editor_data);  
     }  
 </script>
+</body>
 
 
 
