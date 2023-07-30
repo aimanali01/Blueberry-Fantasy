@@ -2,8 +2,8 @@
     "parameters":
     {
         "local_server":"True",
-        "local_uri":"mysql://root:@localhost/blueberryfantasy",
-        "prod_uri":"mysql://root:@localhost/blueberryfantasy",
+        "local_uri":"mysql+pymysql://root:@localhost/blueberryfantasy",
+        "prod_uri":"mysql+pymysql://root:@localhost/blueberryfantasy",
         "no_of_blogs":"12"
     }
 }
