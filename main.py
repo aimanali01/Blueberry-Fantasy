@@ -13,7 +13,7 @@ current_datetime = datetime.now()
 with open('config.json', 'r') as c:
     parameters = json.load(c)["parameters"]
    
-local_server = True    
+local_server = False    
 app = Flask(__name__)
 app.secret_key = 'code-is-life' 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -297,8 +297,4 @@ def add_cache_control(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
-    return response  
-
-
-
-app.run(host='0.0.0.0',debug=False)
+    return response
