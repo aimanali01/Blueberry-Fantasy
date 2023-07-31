@@ -149,6 +149,9 @@ def post_route(sno):
 @app.route("/register/", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        phone_num = request.form.get('phone_num')
+        fname = request.form.get('fname')
+        lname = request.form.get('lname')
         email = request.form.get('email')
         password = request.form.get('password')
 
@@ -157,7 +160,7 @@ def register():
             flash('Email is already registered. Please log in.', 'error')
             return redirect(url_for('login'))
 
-        new_user = Register(email=email)
+        new_user = Register(email=email, password=password, phone_num=phone_num, fname=fname, lname=lname )
         new_user.set_password(password)
 
         db.session.add(new_user)
