@@ -2,6 +2,7 @@ from flask import Flask, render_template,session, request, redirect, url_for, fl
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import Pagination
 from datetime import datetime
 import json
 from base64 import b64encode
@@ -75,35 +76,24 @@ class Comments(db.Model):
 @app.route("/")
 def home():
     logged_in = 'user_id' in session and session['user_id'] is not None
-    add_blog = Add_blog.query.filter_by().all()
-    last = math.ceil(len(add_blog)/int(parameters['no_of_blogs']))
+
     page = request.args.get('page')
     if (not str(page).isnumeric()):
         page = 1
     page = int(page)    
-    add_blog = add_blog[(page-1)*int(parameters['no_of_blogs']):(page-1)*int(parameters['no_of_blogs'])+int(parameters['no_of_blogs'])]
         
-    if (page == 1 and page != last):
-        prev = "#"
-        next = "/?page="+ str(page + 1)
-    elif (page == last and last != 1):
-        prev = "/?page="+ str(page - 1)
-        next = "#"
-    elif (last == 1 and page == last):
-        prev = "#"
-        next = "#"
-    else:
-        prev = "/?page="+ str(page - 1) 
-        next = "/?page="+ str(page + 1)  
+    blogs_query = Add_blog.query.paginate(page=page, per_page=int(parameters['no_of_blogs']))
+    blogs = blogs_query.items
+    prev = "#"
+    next = "#"
+    if blogs_query.has_prev:
+        prev = f"/?page={blogs_query.prev_num}"
+    if blogs_query.has_next:
+        next = f"/?page={blogs_query.next_num}"
     
-
-    blog = Add_blog.query.all()
-    blog_images = {}
-    for blog in add_blog:
-        image = b64encode(blog.img_file).decode()
-        blog_images[blog.sno] = image
-        image = blog_images
-    return render_template('index.html', parameters=parameters, add_blog=add_blog, blog=blog, blog_images=blog_images, prev=prev, next=next, logged_in=logged_in)
+    blog_images = {blog.sno: b64encode(blog.img_file).decode() for blog in blogs}
+    
+    return render_template('index.html', parameters=parameters, add_blog=blogs, blog=blogs, blog_images=blog_images, prev=prev, next=next, logged_in=logged_in)
 
 
 
@@ -160,14 +150,14 @@ def register():
             flash('Email is already registered. Please log in.', 'error')
             return redirect(url_for('login'))
 
-        new_user = Register(email=email, password=password, phone_num=phone_num, fname=fname, lname=lname )
-        new_user.set_password(password)
+        new_user = Register(email=email, password=password, phone_num=phone_num, fname=fname, lname=lname, date=datetime.now())
+        # new_user.set_password(password)
 
         db.session.add(new_user)
         db.session.commit()
 
         flash('Account created successfully. Please log in.', 'success')
-        return redirect('login')
+        return redirect('/login')
 
     return render_template('register.html', parameters=parameters)
 
@@ -210,15 +200,9 @@ def contact():
 
 @app.route("/dashboard/")
 def dashboard():
-    # if 'logged_in' not in session or not session['logged_in']:
-    #     flash('Please log in to access the dashboard.', 'error')
-    #     return redirect('/login/')
-
     sno = session['user_id']
     user = Register.query.get(sno)
-
     add_blog = Add_blog.query.filter_by(user_id=user.sno).all()
-
     return render_template('dashboard.html', user=user, add_blog=add_blog)
 
 
@@ -255,14 +239,24 @@ def edit(sno):
     img = request.files.get('img_file')
     return render_template('edit.html', parameters=parameters, sno=sno, blog=blog, logged_in=logged_in, img=img)
 
+
+
 @app.route("/delete/<string:sno>" , methods=['GET', 'POST'])
 def delete(sno):
     blog = Add_blog.query.filter_by(sno=sno).first()
     if blog:
         db.session.delete(blog)
         db.session.commit()
-    return redirect("/dashboard/")    
-        
+    return redirect("/dashboard/")   
+
+
+@app.route("/post/<string:sno>/delete/<string:id>" , methods=['GET','POST'])
+def deleteComment(sno, id):
+    comment = Comments.query.filter_by(sno=id).first()
+    if comment:
+        db.session.delete(comment)
+        db.session.commit()
+    return redirect('/post/' + sno)
 
 
 @app.route("/login/", methods=['GET', 'POST'])
@@ -294,7 +288,6 @@ def logout():
     return redirect(url_for('login'))
 
 
-
 @app.after_request
 def add_cache_control(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -302,4 +295,4 @@ def add_cache_control(response):
     response.headers["Expires"] = "0"
     return response  
 
-# app.run()
+# app.run(debug=True)
