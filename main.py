@@ -16,6 +16,7 @@ with open('config.json', 'r') as c:
    
 local_server = False    
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 app.secret_key = 'code-is-life' 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
