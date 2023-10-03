@@ -2,7 +2,6 @@ from flask import Flask, render_template,session, request, redirect, url_for, fl
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy import Pagination
 from datetime import datetime
 import json
 from base64 import b64encode
@@ -296,4 +295,4 @@ def add_cache_control(response):
     response.headers["Expires"] = "0"
     return response  
 
-# app.run(debug=True)
+app.run(debug=True)

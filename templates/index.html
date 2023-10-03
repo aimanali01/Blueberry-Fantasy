@@ -95,7 +95,7 @@
             <img class="card-img" src="data:image/jpeg;base64,{{ blog_images[blog.sno] | safe }}" alt="" width="258" height="258" />
           </a>
           <div class="card-body px-0 pb-0">
-            <div class="card-text" style="max-height: 30px; text-overflow: ellipses; overflow: hidden; display: inline-block">
+            <div class="card-text" style="max-height: 30px; text-overflow: hidden; overflow: hidden; display: inline-block; max-width: 190px;">
               {% autoescape off %}
               {{blog.content}}
               {% endautoescape %}
